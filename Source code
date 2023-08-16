@@ -1,0 +1,162 @@
+// 応答メッセージURL
+const REPLY = "https://api.line.me/v2/bot/message/reply";
+
+// アクセストークン
+const ACCESS_TOKEN = "ZJIcxVBg3FKNPYYuJDEkqLHx07BHsI/24d5Ad560kd+ndt1KSApf3/IKECifLNKV1wIs/7Xy7nTbIEUlIxRKS6douOxyEmg+l5nJckdiyAQWRRX7D+oxJISfxu5/3mtOxdPvLckUkzs8doq6ro8TwwdB04t89/1O/w1cDnyilFU=";
+
+// スプレッドシート情報
+// https://docs.google.com/spreadsheets/d/1dNvg-0IEpRTUXIgUZY6Xc-5afycURLOF-zkGMXnBWk0/edit?usp=sharing
+const SHEET_ID   = '1dNvg-0IEpRTUXIgUZY6Xc-5afycURLOF-zkGMXnBWk0';
+const SHEET      = SpreadsheetApp.openById(SHEET_ID).getSheetByName('シート1');
+
+// Google Drive ID
+// https://drive.google.com/drive/u/0/folders/0AHZfntbcQr9GUk9PVA
+const GOOGLE_DRIVE_ID = "0AHZfntbcQr9GUk9PVA";
+
+// LINEから送られてきたデータを取得 doPost()
+function doPost(e) {
+
+  //メッセージ受信
+  const data = JSON.parse(e.postData.contents).events[0];
+  //ユーザーID取得
+  const lineUserId = data.source.userId;
+  // リプレイトークン取得
+  const replyToken = data.replyToken;
+  // 送信されたメッセージの種類を取得
+  // https://developers.line.biz/ja/docs/messaging-api/message-types/#sticker-messages
+  const postType = data.message.type;
+
+  // 写真の時
+  if ( "image" === postType ) {
+    imageSave(replyToken, lineUserId, data);
+  } else {
+    sendMessage(replyToken, '画像を送信してください')
+  }
+
+}
+
+// 送信された画像を保存 imageSave()
+function imageSave(replyToken, lineUserId, data) {
+
+  // LINEから画像取得 getImg()
+  const imgData = getImg(data);
+
+  // Googleドライブに保存　saveImg()
+  const imgInfo = saveImg(imgData, lineUserId);
+
+  // //「保存完了」とLINEにメッセージを送る
+  sendMessage(replyToken, imgInfo);
+
+}
+
+// LINEから画像取得　getImg()
+function getImg(data) {
+
+  const IMG_URL = 'https://api-data.line.me/v2/bot/message/' + data.message.id + '/content';
+  const HEAD = {
+    "method":"get",
+    "headers": {
+      "Authorization" : "Bearer " + ACCESS_TOKEN
+    }
+  }
+  const imgData = UrlFetchApp.fetch(IMG_URL, HEAD);
+  return imgData;
+  
+}
+
+// Googleドライブに保存　saveImg()
+function saveImg(imgBinary, lineUserId){
+
+  //GoogleDriveフォルダID
+  const folder = DriveApp.getFolderById(GOOGLE_DRIVE_ID);
+  //ランダムな文字列を生成して、画像のファイル名とする
+  const fileName = Math.random().toString(36).slice(-8);
+  //Googleドライブのフォルダに画像を生成
+  const imageFile = folder.createFile(imgBinary.getBlob().setName(fileName));
+  //「保存しました」としたメッセージを変数に代入
+  const imgInfo = '保存完了！';
+
+  //画像ファイルURL取得
+  const imageURL = 'https://drive.google.com/uc?export=view&id=' + imageFile.getId();
+
+  //画像ファイルにリンクでアクセスの権限付与
+  imageFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+
+  debugImgLog(imageURL, lineUserId);
+  return imgInfo;
+
+}
+
+// スプレッドシートに画像を保存 debugImgLog()
+function debugImgLog(text, userId) {
+  
+  if ('' == text) {
+    return;
+  }
+  
+  const date = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm:ss')
+  const userName = getUserDisplayName(userId)
+  const userImg = getUserDisplayImg(userId)
+  
+  SHEET.appendRow([userId, userImg, userName, text, date]);
+  // 日付順に並び替え
+  const numColumn = SHEET.getLastColumn(); // 最後列の列番号を取得
+  const numRow    = SHEET.getLastRow()-1;  // 最後行の行番号を取得
+  const dataRange = SHEET.getRange(2, 1, numRow, numColumn);
+  dataRange.sort([{column: 5, ascending: false}]);
+    
+}
+
+// ユーザーのプロフィール名取得 getUserDisplayName()
+function getUserDisplayName(userId) {
+
+  const url = 'https://api.line.me/v2/bot/profile/' + userId;
+  const userProfile = UrlFetchApp.fetch(url,{
+    'headers': {
+      'Authorization' : 'Bearer ' + ACCESS_TOKEN,
+    },
+  })
+  return JSON.parse(userProfile).displayName;
+
+}
+
+// ユーザーのプロフィール画像取得 getUserDisplayImg()
+function getUserDisplayImg(userId) {
+
+  const url = 'https://api.line.me/v2/bot/profile/' + userId;
+  const userProfile = UrlFetchApp.fetch(url,{
+    'headers': {
+      'Authorization' :  'Bearer ' + ACCESS_TOKEN,
+    },
+  })
+  return JSON.parse(userProfile).pictureUrl;
+
+}
+
+// LINEにメッセージ送信 sendMessage()
+function sendMessage(replyToken, replyText) {
+
+  const postData = {
+    "replyToken" : replyToken,
+    "messages" : [
+      {
+        "type" : "text",
+        "text" : replyText
+      }
+    ]
+  };
+
+  const headers = {
+    "Content-Type" : "application/json; charset=UTF-8",
+    "Authorization" : "Bearer " + ACCESS_TOKEN
+  };
+  
+  const options = {
+    "method" : "POST",
+    "headers" : headers,
+    "payload" : JSON.stringify(postData)
+  };
+
+  return UrlFetchApp.fetch(REPLY, options);
+
+}
