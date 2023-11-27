@@ -1,0 +1,89 @@
+// API設定部分
+const OPENAI_APIKEY     = "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"; // OpenAI社のAPIキー
+const LINE_ACCESS_TOKEN = "ZuxbfIwgypJsE4ewx3ZA9vsH2ApmP2nmeNtj058mODtrCcPrtP6V7R3zASJSKOiZc1AKpO59rdsneVJe2v14hGQn2xT+6EwotxJGL+P/GctfKELIBcf/wjBtmylYqpsfyouzrAdzWJQ2whVXmD8r5wdB04t89/1O/w1cDnyilFU="; // チャネルアクセストークン
+
+// 使用API
+const LINE_REPLY_URL = 'https://api.line.me/v2/bot/message/reply';
+const CHAT_GPT_URL   = "https://api.openai.com/v1/chat/completions";
+const CHAT_GPT_VER   = "gpt-3.5-turbo-16k";
+
+// スプレッドシートの情報
+const SS    = SpreadsheetApp.getActiveSpreadsheet();
+const SHEET = SS.getSheetByName('シート1');
+
+function doPost(e) {
+  //メッセージ受信
+  const data = JSON.parse(e.postData.contents).events[0];
+  //ユーザーID取得
+  const lineUserId = data.source.userId;
+  // リプレイトークン取得
+  const replyToken = data.replyToken;
+  // 送信されたメッセージ取得
+  let postMessage = data.message.text;
+
+  // テキスト以外だった時（スタンプや写真など）
+  if (postMessage === undefined)
+    return sendMessage(replyToken, "まだ文章しか認識できません！");
+
+  // データ生成＆LINEに送信
+  const replyText = chatGPT(postMessage);
+  sendMessage(replyToken, replyText);
+  // debugLog(lineUserId, postMessage, replyText);
+}
+
+// 返答するメッセージを生成
+function chatGPT(prompt) {
+  let constraints;
+  try {
+    constraints = SHEET.getRange(1, 1).getValue()
+  } catch (e) {
+    console.log("制約なし");
+  }
+  const requestOptions = {
+    "method": "post",
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer "+ OPENAI_APIKEY
+    },
+    "payload": JSON.stringify({
+      "model": CHAT_GPT_VER,
+      "messages": [
+        {"role": "system", "content": constraints},
+        {"role": "user", "content": prompt}
+       ]
+    })
+  }
+  const response = UrlFetchApp.fetch(CHAT_GPT_URL, requestOptions);
+  const responseText = response.getContentText();
+  const json = JSON.parse(responseText);
+  const text = json['choices'][0]['message']['content'].trim();
+  return (text);
+}
+
+// LINEに返答するデータ生成
+function sendMessage(replyToken, replyText) {
+  const postData = {
+    "replyToken" : replyToken,
+    "messages" : [
+      {
+        "type" : "text",
+        "text" : replyText
+      }
+    ]
+  };
+  return postMessage(postData);
+}
+
+// LINEに返答
+function postMessage(postData) {
+  const headers = {
+    "Content-Type" : "application/json; charset=UTF-8",
+    "Authorization" : "Bearer " + LINE_ACCESS_TOKEN
+  };
+  const options = {
+    "method" : "POST",
+    "headers" : headers,
+    "payload" : JSON.stringify(postData)
+  };
+  return UrlFetchApp.fetch(LINE_REPLY_URL, options);
+}
