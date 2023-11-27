@@ -88,7 +88,7 @@ https://github.com/furuhashilab/2022gsc_Naoya-Uematsu
 
 スライド
 
-https://docs.google.com/presentation/d/16d25H2Ie1DfdPf2te9U6-lS32ol4df8z9oNSaBb_t0s/edit
+https://docs.google.com/presentation/d/1vEueKi70pyikVhniQt50v4zoqEtjzaMdIHcTpcf8eRs/edit
 
 メディウム
 
