@@ -94,7 +94,6 @@ https://docs.google.com/presentation/d/1vEueKi70pyikVhniQt50v4zoqEtjzaMdIHcTpcf8
 
 https://medium.com/furuhashilab/古橋ゼミ公式-line-bot-df092748baed
 
-グラレコ
-![78061BA1-FA58-4A01-8C4A-56C13D638158](https://user-images.githubusercontent.com/93098277/216662476-82ee2e97-feb8-4482-882e-c5b1634b9d5c.jpeg)
+
 
 
