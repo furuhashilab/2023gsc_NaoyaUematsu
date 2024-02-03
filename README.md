@@ -46,25 +46,6 @@
 ### Google Apps Script
 三つ目はGoogle Apps Scriptである。これはGoogleが提供する各種サービスの自動化、連携を行うためのローコード開発ツールである。
 
-### 古橋bot
-
-
-今回開発にMakeを使用したのは誰もが編集できるLINE botにしたかったからである。
-![4F209B9E-5F2A-4866-A280-5C49D85EF43A](https://user-images.githubusercontent.com/93098277/216643308-ab59a825-b6db-4320-ab60-21e9e9037dbc.png)
-Google スプレッドシートを仲介して返信するから仕組みで作ったため、スプレッドシートのURLを知っている人なら誰でもLINE botに語彙を追加できるようになっています。
-
-また公式LINE独自のシステムであるリッチメニューも作成した。
-![EB8B7AC0-BBAD-4154-BEC6-163013DD90F3](https://user-images.githubusercontent.com/93098277/216643520-b904f23d-b0a4-4220-b98f-8b71040750c6.jpeg)
-
-
-VF画像保存用bot
-![5358F229-476E-48E1-8BA1-C2924D9DBE7B](https://user-images.githubusercontent.com/93098277/216643559-2342dc38-e5c4-4040-967c-f83174d28212.jpeg)
-
-今回はもう一つLINE上で送った画像をGoogleドライブに保存するシステムを持ったLINEbotを作成した。なぜこのbotを作ったのかというと撮った写真をGoogleドライブに保存し、共有する際スマートフォンであるとやりにくいからである。
-![A280304A-1092-483B-AF45-9B9F23A26308](https://user-images.githubusercontent.com/93098277/216643676-1fba3050-2a0c-4e32-aabb-945122735d10.jpeg)
-
-これはGASを使ってローコード開発し、送られた画像はドライブに保存されることに加え、スプレッドシートに記録される。
-
 ## Results
 質問用古橋bot
 
