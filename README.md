@@ -66,10 +66,14 @@ AI古橋bot
 ![スクリーンショット 2024-02-04 5 27 19](https://github.com/furuhashilab/2023gsc_NaoyaUematsu/assets/93098277/a024fbb6-2ac5-423e-9fde-1aade5457c49)
 
 自分のフォロワーさんたちでのアンケート調査なので多少バイアスがかかっているかと思うが検証する価値はあるのではないか
+![IMG_9136](https://github.com/furuhashilab/2023gsc_NaoyaUematsu/assets/93098277/3696952f-639b-4d75-a6be-ff8f61ba3853)
+![IMG_9137](https://github.com/furuhashilab/2023gsc_NaoyaUematsu/assets/93098277/5e042ff3-b5ab-47fe-b7a4-9441d7b3e306)
+![IMG_9141](https://github.com/furuhashilab/2023gsc_NaoyaUematsu/assets/93098277/234acb7d-e3cc-4b4c-a3d2-78c6d37f396c)
 
 
 ### AI古橋botについて
-LINE公式AIチャットくんに比べて格安でほぼ同じ機能を使えるように実装できた. またCustom instructionを追加できるようにしたことで独自の制約条件や情報を埋め込めるという点でAIチャット君にはない新規性かつ古橋ゼミでの活動を便利にするものなのではと考える。
+LINE公式AIチャットくんに比べて格安でほぼ同じ機能を使えるように実装できた. またCustom instructionを追加できるようにしたことで![Uploading IMG_9141.PNG…]()
+独自の制約条件や情報を埋め込めるという点でAIチャット君にはない新規性かつ古橋ゼミでの活動を便利にするものなのではと考える。
 ただこれは作成者の私の感想であって客観的にどうかは解明されていない。使用していただく母数を増やして古橋botが本当に便利ツールとして必要なのか検証することが今後の課題だ。
 
 ## Conclusion
