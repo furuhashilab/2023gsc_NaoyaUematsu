@@ -100,7 +100,6 @@ LINE公式AIチャットくんに比べて格安でほぼ同じ機能を使え�
 
 
 ## プロジェクト管理
-
 https://github.com/furuhashilab/2023gsc_NaoyaUematsu
 
 スライド
@@ -109,4 +108,5 @@ https://docs.google.com/presentation/d/1vEueKi70pyikVhniQt50v4zoqEtjzaMdIHcTpcf8
 
 メディウム
 
-
+reference
+https://docs.google.com/spreadsheets/d/1IvYw1f0j1zz2RR4aLmP_EnAtVtxOAuEU2y4lsGM-HMw/edit?usp=sharing
