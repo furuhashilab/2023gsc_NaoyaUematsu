@@ -1,5 +1,5 @@
 // API設定部分
-const OPENAI_APIKEY     = "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"; // OpenAI社のAPIキー
+const OPENAI_APIKEY     = "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"; // OpenAI社のAPIキー
 const LINE_ACCESS_TOKEN = "ZuxbfIwgypJsE4ewx3ZA9vsH2ApmP2nmeNtj058mODtrCcPrtP6V7R3zASJSKOiZc1AKpO59rdsneVJe2v14hGQn2xT+6EwotxJGL+P/GctfKELIBcf/wjBtmylYqpsfyouzrAdzWJQ2whVXmD8r5wdB04t89/1O/w1cDnyilFU="; // チャネルアクセストークン
 
 // 使用API
@@ -23,12 +23,12 @@ function doPost(e) {
 
   // テキスト以外だった時（スタンプや写真など）
   if (postMessage === undefined)
-    return sendMessage(replyToken, "まだ文章しか認識できません！");
+    return sendMessage(replyToken, "まだ文章しか認識できません。ごめん！");
 
   // データ生成＆LINEに送信
   const replyText = chatGPT(postMessage);
   sendMessage(replyToken, replyText);
-  // debugLog(lineUserId, postMessage, replyText);
+  debugLog(lineUserId, postMessage, replyText);
 }
 
 // 返答するメッセージを生成
