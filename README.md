@@ -96,17 +96,14 @@ LINE公式AIチャットくんに比べて格安でほぼ同じ機能を使え�
 本研究を進めるにあたり青山学院大学の古橋大地教授をはじめ多くの方々より多大な助言を賜 りました。厚く感謝を申し上げます。
 
 ## 参考文献・資料リスト
-
+https://docs.google.com/spreadsheets/d/1IvYw1f0j1zz2RR4aLmP_EnAtVtxOAuEU2y4lsGM-HMw/edit?usp=sharing
 
 
 ## プロジェクト管理
 https://github.com/furuhashilab/2023gsc_NaoyaUematsu
 
-スライド
-
+## スライド
 https://docs.google.com/presentation/d/1vEueKi70pyikVhniQt50v4zoqEtjzaMdIHcTpcf8eRs/edit#slide=id.g29f64eba086_1_0
 
 メディウム
 
-reference
-https://docs.google.com/spreadsheets/d/1IvYw1f0j1zz2RR4aLmP_EnAtVtxOAuEU2y4lsGM-HMw/edit?usp=sharing
